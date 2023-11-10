@@ -1,8 +1,7 @@
 <resources>
     <string name="app_name">MyMovieApp</string>
-<!--
+    <!--
   //  <string name="api_key">890a86f5656fdca2767b6be3222e3526</string>
 -->
     <string name="api_key">3cb4444019f27aeb3e54957b369f76c5</string>
-
 </resources>

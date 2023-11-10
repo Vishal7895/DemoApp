@@ -6,7 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.example.mymovieapp.Model.Movie
-@Database(entities = [Movie::class], version = 1, exportSchema = false)
+/*@Database(entities = [Movie::class], version = 1, exportSchema = false)
 @TypeConverters(DbConverter::class)
 abstract class MovieDatabase : RoomDatabase() {
 
@@ -32,4 +32,15 @@ abstract class MovieDatabase : RoomDatabase() {
          INSTANCE = null
       }
    }
+}*/
+
+@Database(
+   entities = arrayOf(Movie::class),
+   version = 1,
+   exportSchema = false
+)
+@TypeConverters(DbConverter::class)
+abstract class movieDb : RoomDatabase() {
+   abstract fun movieDao(): MovieDao
+
 }

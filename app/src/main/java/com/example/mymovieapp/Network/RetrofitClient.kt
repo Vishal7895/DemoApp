@@ -12,6 +12,8 @@ import javax.inject.Inject
 
 class RetrofitClient @Inject constructor() {
     private val BaseUrl="https://api.themoviedb.org/3/"
+    private val authToken ="eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIzY2I0NDQ0MDE5ZjI3YWViM2U1NDk1N2IzNjlmNzZjNSIsInN1YiI6IjY1NDM0MjM3ZTFhZDc5MDEyYzkwZmI4MyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.gv00iOlMEIAE39UjmIn2GTf_UciGZaUGqnmNWSK-l-I"
+
     fun <Api> buildApi(
         api: Class<Api>,
         context: Context,
@@ -19,6 +21,7 @@ class RetrofitClient @Inject constructor() {
 
         return Retrofit.Builder()
             .baseUrl(BaseUrl)
+            .client(getRetrofitClient())
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(api)
@@ -28,7 +31,9 @@ class RetrofitClient @Inject constructor() {
         return OkHttpClient.Builder()
             .addInterceptor { chain ->
                 chain.proceed(chain.request().newBuilder().also {
-                    it.addHeader("Accept", "application/json")
+                    it.addHeader("accept", "application/json")
+                        .addHeader("Authorization","Bearer $authToken")
+
 
 
                 }.build())

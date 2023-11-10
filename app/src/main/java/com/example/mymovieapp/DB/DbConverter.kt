@@ -18,4 +18,14 @@ class DbConverter {
         val type = object : TypeToken<List<Movie>>() {}.type
         return Gson().fromJson<List<Movie>>(list, type)
     }
+
+    @TypeConverter
+    fun fromList(list: List<Int>?): String? {
+        return list?.toString()
+    }
+
+    @TypeConverter
+    fun toList(data: String?): List<Int>? {
+        return data?.map { it.code }
+    }
 }

@@ -9,7 +9,7 @@ interface ApiCall {
     suspend fun <T> apiCall(apiCall: suspend () -> T): Resource<T> {
         return withContext(Dispatchers.IO) {
             try {
-                Resource.success(apiCall.invoke())
+                Resource.success(apiCall.invoke(),"")
             } catch (throwable: Throwable) {
                 when (throwable) {
                     is HttpException -> {

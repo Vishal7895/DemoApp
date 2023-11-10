@@ -3,6 +3,7 @@ package com.example.mymovieapp.DI
 import android.annotation.SuppressLint
 import android.content.Context
 import androidx.room.Room
+import com.example.mymovieapp.DB.movieDb
 import com.example.mymovieapp.Network.RetrofitClient
 import com.example.mymovieapp.Remote.RestApi
 import dagger.Module
@@ -29,6 +30,13 @@ class AppModule {
     fun provideContext(@ApplicationContext context: Context): Context {
         return context
     }
+
+    @Provides
+    @Singleton
+    fun provideDatabase(@ApplicationContext app: Context) =
+        Room.databaseBuilder(app, movieDb::class.java, "movieDb")
+            .fallbackToDestructiveMigration()
+            .build()
 }
 
 

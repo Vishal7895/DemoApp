@@ -6,44 +6,54 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+
 @Entity(tableName = "movie")
 @Keep
-@Serializable
-data class Movie  (
+data class Movie(
     @PrimaryKey
-    @SerialName("id")
-   
+
+
     var id: Int? = null,
 
-    
-    @SerialName("title")
-   
+
     var title: String? = null,
 
 
-    
-    @SerialName("poster_path")
-   
-    var posterPath: String? = null,
+    var poster_path: String? = null,
 
 
-    
-    @SerialName("release_date")
-   
-    var releaseDate: String? = null,
+    var backdrop_path: String? = null,
 
 
-    
-    @SerialName("overview")
-   
+    var release_date: String? = null,
+
+
+    var vote_average: Double? = null,
+
+
+    var adult: Boolean? = null,
+
+
+    var genre_ids: List<Int>? = null,
+
+
+    var original_language: String? = null,
+
+
+    var original_title: String? = null,
+
+
     var overview: String? = null,
 
 
-    
-    @SerialName("vote_average")
-   
-    var voteAverage: Double? = null
+    var popularity: Double? = null,
 
 
+    var vote_count: Int? = null,
 
-)
+
+    var video: Boolean? = null,
+
+
+    )
+
