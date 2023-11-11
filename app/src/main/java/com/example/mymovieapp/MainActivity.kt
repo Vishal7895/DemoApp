@@ -52,14 +52,14 @@ class MainActivity : AppCompatActivity() {
     private fun handleResponseResult(resource: Resource<List<Movie>>) {
         when(resource.status){
             Status.SUCCESS->{
+                //pass data to recycler view
+
                 val recyclerView=binding.recyclerview
                 val adapter = resource.data?.let { MovieAdapter(this,it) }
                 recyclerView.layoutManager = GridLayoutManager(this, 2) // 2 columns in the grid
                 recyclerView.adapter = adapter
                 Toast.makeText(this,resource.message,Toast.LENGTH_LONG).show()
 
-                //pass data to recycler view
-                //also disable loading dialog
             }
             Status.LOADING->{
                 //show loading dialog
@@ -67,7 +67,8 @@ class MainActivity : AppCompatActivity() {
 
             }
             Status.ERROR->{
-                Toast.makeText(this,"error",Toast.LENGTH_LONG).show()
+                //show the error mssg
+                Toast.makeText(this,resource.message,Toast.LENGTH_LONG).show()
 
             }
             else->{}
