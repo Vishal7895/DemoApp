@@ -16,7 +16,6 @@ import javax.inject.Inject
 
 class MovieRepository @Inject constructor(
     private val movieApi: RestApi,
-    private val context: Context,
     private val db: movieDb
 ):ApiCall {
      suspend fun getPopularMovie(string: String): Flow<Resource<MovieResponse> >{
@@ -35,9 +34,6 @@ class MovieRepository @Inject constructor(
 
 
     suspend fun insertMovies(movieList: List<Movie>) {
-       // var db: MovieDao = MovieDatabase.getInstance(context)?.movieDao()!!
-
-
         db.movieDao().insert(movieList)
     }
 }

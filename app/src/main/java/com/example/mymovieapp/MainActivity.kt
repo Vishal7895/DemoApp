@@ -21,19 +21,23 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     lateinit var viewModel: MovieViewModel
-    lateinit var binding:ActivityMainBinding
+    lateinit var binding: ActivityMainBinding
+
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
-        viewModel=ViewModelProvider(this).get(MovieViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(MovieViewModel::class.java)
+        binding.back.setOnClickListener {
+            finish()
+        }
 
 
-     //   viewModel.getPopularMovie(resources.getString(R.string.api_key))
+        //   viewModel.getPopularMovie(resources.getString(R.string.api_key))
         callApi()
-        viewModel.movieResponse.observe(this){
+        viewModel.movieResponse.observe(this) {
             handleResponseResult(it)
         }
 
@@ -41,37 +45,40 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun callApi() {
-        if (CommonUtils.isNetworkConnected(this)){
+        if (CommonUtils.isNetworkConnected(this)) {
             viewModel.getPopularMovie(resources.getString(R.string.api_key))
-        }else{
+        } else {
             viewModel.getPopularMovie()
         }
 
     }
 
     private fun handleResponseResult(resource: Resource<List<Movie>>) {
-        when(resource.status){
-            Status.SUCCESS->{
+        when (resource.status) {
+            Status.SUCCESS -> {
                 //pass data to recycler view
 
-                val recyclerView=binding.recyclerview
-                val adapter = resource.data?.let { MovieAdapter(this,it) }
+                val recyclerView = binding.recyclerview
+                val adapter = resource.data?.let { MovieAdapter(this, it) }
                 recyclerView.layoutManager = GridLayoutManager(this, 2) // 2 columns in the grid
                 recyclerView.adapter = adapter
-                Toast.makeText(this,resource.message,Toast.LENGTH_LONG).show()
+                Toast.makeText(this, resource.message, Toast.LENGTH_LONG).show()
 
             }
-            Status.LOADING->{
+
+            Status.LOADING -> {
                 //show loading dialog
-                Toast.makeText(this,"loading",Toast.LENGTH_LONG).show()
+                Toast.makeText(this, "loading", Toast.LENGTH_LONG).show()
 
             }
-            Status.ERROR->{
+
+            Status.ERROR -> {
                 //show the error mssg
-                Toast.makeText(this,resource.message,Toast.LENGTH_LONG).show()
+                Toast.makeText(this, resource.message, Toast.LENGTH_LONG).show()
 
             }
-            else->{}
+
+            else -> {}
         }
     }
 
